@@ -3,6 +3,8 @@
 For Clone the git code into Code editor.
 
 git clone https://github.com/GaneshVamsi369/indroyd.git
+
+
 For Change the Directory
 
 cd indroyd
@@ -15,7 +17,6 @@ npm install
 
 Runs the app in the development mode.
 
-node app.js
+npm start
 
-### `npm run build` fails to minify
 
