@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MainScreen from './components/MainScreen';
+import PlayerScreen from './components/PlayerScreen';
+import questions from './questions';
 
 function App() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
+  const [winner, setWinner] = useState('');
+  
+  const nextQuestion = () => {
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    setCurrentQuestion(questions[currentQuestionIndex + 1]);
+    setWinner('');
+  };
+
+  const handleCorrectAnswer = (playerName) => {
+    setWinner(playerName);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={<MainScreen question={currentQuestion} winner={winner} nextQuestion={nextQuestion} />}
+        />
+        <Route
+          path="/player/:questionId"
+          element={<PlayerScreen question={currentQuestion} onCorrectAnswer={handleCorrectAnswer} />}
+        />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
